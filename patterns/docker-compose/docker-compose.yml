@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql_container_name
+    environment:
+      MYSQL_DATABASE: mysql_container_name
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./docker/volumes/mysql:/var/lib/mysql"
+  php:
+    image: webdevops/php:7.2
+    container_name: php_container_name
+    volumes:
+      - "./:/app"
+      - "~/.composer:/root/.composer"
+  nginx:
+    depends_on:
+      - php
+    image: webdevops/nginx
+    container_name: nginx_container_name
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+      WEB_DOCUMENT_INDEX: index.php
+      WEB_PHP_SOCKET: php:9000
+    volumes:
+      - "./:/app"
+    ports:
+      - "80:80"
