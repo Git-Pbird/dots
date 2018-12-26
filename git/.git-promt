@@ -1,4 +1,4 @@
-include ../.colors;
+source $DOTDIR/.colors;
 
 function getBranch() {
 	local branchInfoLine=$(git branch -v 2>/dev/null | grep "^*"| colrm 1 2);

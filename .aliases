@@ -1,8 +1,10 @@
 ## Development
 alias up="docker-compose up -d"
 alias ngrok="~/repo/ngrok http"
+
 alias newlaravel="composer create-project --prefer-dist laravel/laravel "
-alias newlara="sh ~/repo/www/dots/scripts/laravel_install.sh";
+alias newlara="sh $DOTDIR/scripts/laravel_install.sh";
+alias newSite="sh $DOTDIR/scripts/nginx_host_install.sh";
 
 ## General
 alias l="ls -lah";

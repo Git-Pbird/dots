@@ -1,5 +1,7 @@
-source .aliases;
-source ./git/.git-promt;
+DOTDIR=$HOME'/repo/www/dots';
+
+source $DOTDIR/.aliases;
+source $DOTDIR/git/.git-promt;
 
 export PATH="/usr/local/opt/php@7.1/bin:$PATH"
 export PATH="/usr/local/opt/php@7.1/sbin:$PATH"
