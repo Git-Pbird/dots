@@ -1,0 +1,26 @@
+[user]
+    name    = Ivan_Kovinskyi
+    email   = kovinskyi.ivan@pdffiller.team
+
+[color]
+    ui = true
+
+[color "branch"]
+    current = green reverse
+    local   = yellow
+    remote  = green
+
+[color "status"]
+    added     = green
+    changed   = yellow
+    untracked = red
+
+[alias]
+    hist     = log --pretty=format:\"%Cred%h%Creset %Cgreen(%ad)%Creset | %C(yellow)%d%Creset %s\" --graph --date=short
+    fullhist = log --pretty=format:\"%Cred%h%Creset %Cgreen(%ad)%Creset | %s\" --graph --date=short --stat
+    lg       = log --pretty=format:\"%Cred%h%Creset %Cgreen(%cr)%Creset | %C(yellow)%d%Creset %s\" --graph --date=short
+    co       = checkout
+
+[core]
+    excludesfile = ~/repo/www/dots/git/.gitignore
+    editor       = nano

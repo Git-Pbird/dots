@@ -1,1 +1,9 @@
 *.access
+*.patch
+*-old*
+
+.DS_Store
+.idea/
+.editorconfig
+
+dredd*.yml
