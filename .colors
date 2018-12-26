@@ -1,0 +1,41 @@
+COLOR_RED="\033[0;31m"
+COLOR_YELLOW="\033[0;33m"
+COLOR_GREEN="\033[0;32m"
+COLOR_LGREEN="\033[01;32m"
+COLOR_OCHRE="\033[38;5;95m"
+COLOR_BLUE="\033[0;34m"
+COLOR_LBLUE="\033[01;34m"
+COLOR_WHITE="\033[0;37m"
+COLOR_RESET="\033[0m"
+
+# ANSI color codes
+RS="\033[0m"    # reset
+HC="\033[1m"    # hicolor
+UL="\033[4m"    # underline
+INV="\033[7m"   # inverse background and foreground
+
+F_0_BLK="\033[30m"      # foreground black
+
+F_0_RED="\033[31m"      # foreground red
+
+F_0_GRN="\033[00;32m"   # foreground green
+F_1_GRN="\033[01;32m"   # foreground light green
+
+F_0_YEL="\033[00;33m"   # foreground yellow
+F_2_YEL="\033[01;33m"   # foreground yellow
+
+F_0_BLE="\033[00;34m"   # foreground blue
+F_1_BLE="\033[01;34m"   # foreground blue
+F_2_BLE="\033[00;35m"   # foreground magenta
+F_3_BLE="\033[01;36m"   # foreground cyan
+
+F_0_WHT="\033[37m" # foreground white
+
+B_0_BLK="\033[40m" # background black
+B_0_RED="\033[41m" # background red
+B_0_GRN="\033[42m" # background green
+B_0_YEL="\033[43m" # background yellow
+B_0_BLE="\033[44m" # background blue
+B_0_MAG="\033[45m" # background magenta
+B_0_CYN="\033[46m" # background cyan
+B_0_WHT="\033[47m" # background white

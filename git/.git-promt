@@ -1,0 +1,112 @@
+include ../.colors;
+
+function getBranch() {
+	local branchInfoLine=$(git branch -v 2>/dev/null | grep "^*"| colrm 1 2);
+	branch=$(echo $branchInfoLine | awk '{print $1;}');
+	commit=$(echo $branchInfoLine | awk '{print $2;}');
+	# take message from branch line (after commit )
+	message=${branchInfoLine#*$commit};
+	# leave first 75 symbols of the message
+	if [ ${#message} -gt 75 ]; then dots='...'; else dots=''; fi;
+	message=${message:0:75}"$dots";
+}
+
+function showBranchBlock() {
+    # $1 sign_color
+    # $2 sign
+    # $3 text_color
+    # $4 $text
+    echo -e "\n$3 • $branch"
+    echo -e "$3 • \t \033[01;34m $commit $RS $3 $message $RS"
+    echo -e "$3$1 $2    $RS$3$4"
+}
+
+
+function git_color {
+  #Init `branch` , `commit` & `message` variables
+  getBranch
+
+  local git_status="$(git status 2> /dev/null)"
+  local sign_color=$RS;
+  local text_color=$RS;
+  local sign='';
+  local text='';
+
+   if [[ $git_status =~ "On branch" || $git_status =~ "rebase in progress" ]]; then
+        if [[ $git_status =~ "no changes added to commit" ]]; then
+            sign_color='';
+            text_color='\033[01;37m';
+            sign='❗';
+            text=' no changes added to commit (use "git add" and/or "git commit -a")';
+            showBranchBlock "$sign_color" "$sign" "$text_color" "$text"
+
+        elif [[ $git_status =~ "Changes to be committed" ]]; then
+            sign_color='';
+            text_color='\033[01;33m';
+            sign='✚';
+            text=' Changes added, but not committed';
+            showBranchBlock "$sign_color" "$sign" "$text_color" "$text";
+
+        elif [[ $git_status =~ "have diverged" ]]; then
+            sign_color='\033[31m';
+            text_color='\033[91m ';
+            sign='⥄';
+            text=" Conflict! Branch have diverged";
+            showBranchBlock "$sign_color" "$sign" "$text_color" "$text";
+
+        elif [[ $git_status =~ "Your branch is behind" ]]; then
+            sign_color='';
+            text_color='\033[01;33m';
+            sign='▽';
+            text=' Your branch is behind';
+            showBranchBlock "$sign_color" "$sign" "$text_color" "$text";
+
+        elif [[ $git_status =~ "nothing to commit" ]]; then
+            sign_color='';
+            text_color='\033[01;32m';
+            sign='👍';
+            text=' Working tree clean';
+            showBranchBlock "$sign_color" "$sign" "$text_color" "$text";
+
+        elif [[ $git_status =~ "You are currently rebasing branch" ]]; then
+            sign_color='';
+            text_color='\033[01;33m';
+            sign='⎇';
+            text=' Rebase in progress';
+            showBranchBlock "$sign_color" "$sign" "$text_color" "$text";
+
+        elif [[ $git_status =~ "Untracked files:" ]]; then
+            sign_color='';
+            text_color='\033[01;33m';
+            sign='⨯';
+            text=' Untracked files are present';
+            showBranchBlock "$sign_color" "$sign" "$text_color" "$text";
+
+        else
+            echo -e "\033[01;33m"
+        fi
+  fi
+}
+
+function rnd {
+    local color=$((34 + RANDOM % 3));
+    echo -e "\033[01;$color";
+}
+
+PS1="\[\033[01;32m\]"       # color first line
+PS1+="┌──"                  # print sign
+PS1+="\u"                   # print USER name
+PS1+="\[$RS\]: "            # remove coloring & print `:`
+PS1+="$(rnd)m\w"            # pick random color between [34 - 37] & print current folder
+PS1+="\[$RS\]"              # remove coloring
+PS1+="\$(git_color)"        # run GIT processor
+PS1+="\n└──▶  "             # print sing
+PS1+="\[$RS\]"              # remove coloring
+
+if [ -f .git-completion.bash ]; then
+  . .git-completion.bash
+fi
+
+#if [ -f .git-promt.sh ]; then
+#  . .customs/.git-promt.sh
+#fi

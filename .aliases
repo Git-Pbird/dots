@@ -1,0 +1,11 @@
+## Development
+alias up="docker-compose up -d"
+alias ngrok="~/repo/ngrok http"
+alias newlaravel="composer create-project --prefer-dist laravel/laravel "
+alias newlara="sh ~/repo/www/dots/scripts/laravel_install.sh";
+
+## General
+alias l="ls -lah";
+
+## Personal
+alias taxer="javaws ~/Downloads/start.jnlp"
