@@ -4,8 +4,8 @@ server {
     root	    __ENTRY_POINT_PATH__;
     index	    index.php index.html index.htm;
 
-    access_log  __ACCESS_LOG_PATH__nginx_access.log;
-    error_log   __ERRORS_LOG_PATH__nginx_errors.log;
+    access_log  __ACCESS_LOG_PATH__/nginx_access.log;
+    error_log   __ERRORS_LOG_PATH__/nginx_errors.log;
 
 
     location / {
