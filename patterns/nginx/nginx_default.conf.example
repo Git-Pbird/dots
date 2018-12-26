@@ -1,0 +1,35 @@
+server {
+    listen	    __PORT__;
+    server_name __DOMEN__;
+    root	    __ENTRY_POINT_PATH__;
+    index	    index.php index.html index.htm;
+
+    access_log  __ACCESS_LOG_PATH__nginx_access.log;
+    error_log   __ERRORS_LOG_PATH__nginx_errors.log;
+
+
+    location / {
+        try_files $uri $uri/ /index.php?q=$uri&$args;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass_request_headers on;
+        fastcgi_pass_header          Status;
+        fastcgi_pass                 127.0.0.1:9000;
+
+        fastcgi_read_timeout    300;
+        fastcgi_buffer_size     16k;
+        fastcgi_buffers         4 16k;
+        fastcgi_index           index.php;
+        fastcgi_param           SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+        try_files               $uri = 404;
+        include                 fastcgi.conf;
+        include                 fastcgi_params;
+    }
+}

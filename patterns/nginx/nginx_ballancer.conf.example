@@ -1,0 +1,17 @@
+upstream __BALLANCE_GROUP__  {
+    server 127.0.0.1:__PORT__;
+	server 127.0.0.1:__PORT__;
+    server 127.0.0.1:__PORT__;
+}
+
+server {
+    listen	    __PORT__;
+    server_name __DOMEN__;
+
+    access_log  __ACCESS_LOG_PATH__nginx_access.log;
+    error_log   __ERRORS_LOG_PATH__nginx_errors.log;
+
+	location / {
+        proxy_pass http://__BALLANCE_GROUP__;
+    }
+}

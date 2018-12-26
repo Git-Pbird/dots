@@ -4,7 +4,7 @@ services:
     image: mysql:5.7
     container_name: mysql_container_name
     environment:
-      MYSQL_DATABASE: mysql_container_name
+      MYSQL_DATABASE: mysql_container_name_db
       MYSQL_USER: root
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
