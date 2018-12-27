@@ -4,7 +4,11 @@ NGINX_SITE_ENABLED='/usr/local/etc/nginx/servers';
 
 server=${1:-'default.loc'};
 port=${2:-'80'};
-entry_point=${3:-'public'};
+
+if [[ ! $3 ]]; then
+    installationDir=$PWD'/'${server};
+    entry_point=${installationDir}"/public";
+fi
 
 if [[ ! -d $PWD/nginx ]]; then
     mkdir $PWD/nginx;
@@ -29,4 +33,4 @@ cp $MYDIR/../patterns/nginx/nginx_default.conf.example   ${NGINX_F}/${server}.co
 ;
 echo "You should add new site into '/etc/hosts' manually, or just run command bellow : \n";
 #echo "127.0.0.1:${port} ${server}"  |   sudo tee -a /etc/hosts
-echo '>>> 127.0.0.1:'${port} ${server}'|sudo tee -a /etc/hosts';
+echo '>>> echo 127.0.0.1:'${port} ${server}'|sudo tee -a /etc/hosts';

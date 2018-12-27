@@ -1,13 +1,27 @@
 #!/usr/bin/env bash
-
-defaultProject='default';
-defaultAppName='default Application';
-project=${1:-$defaultProject};
-AppName=${2:-$defaultAppName};
-
+source $DOTDIR/.aliases;
 requestFromDir=$PWD;
-installationDir=$PWD'/'$project;
-echo 'installing project `'$AppName'` into `'$installationDir'`\r\n';
-composer create-project --prefer-dist laravel/laravel $project \
-    && cp ~/repo/www/dots/patterns/docker-compose/docker-compose.yml $installationDir \
-    && sed -i '' 's/_container_name/_'$project'/g' $project/docker-compose.yml
+
+#    ${  foo  <-- from variable foo
+#        ##   <-- greedy front trim
+#        *    <-- matches anything
+#        :    <-- until the last ':'
+#    }
+
+#    string="1;2"
+#    echo $string | cut -d';' -f1 # output is 1
+#    echo $string | cut -d';' -f2 # output is 2
+
+domain=${1:-'default.loc'};
+appName=${2:-'app name'};
+
+## Using `project` only as variable for docker-compose container's
+project=$(echo ${domain} | cut -d'.' -f1);
+installationDir=${requestFromDir}'/'${domain};
+
+echo 'installing project `'${appName}'` into `'${installationDir}'`\r\n';
+composer create-project --prefer-dist laravel/laravel ${domain}                         \
+    && cp ~/repo/www/dots/patterns/docker-compose/docker-compose.yml ${installationDir} \
+    && sed -i '' 's|_container_name|_'${project}'|g' ${domain}/docker-compose.yml       \
+;
+echo $( newSite ${domain});
