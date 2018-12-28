@@ -103,8 +103,8 @@ PS1+="\$(git_color)"        # run GIT processor
 PS1+="\n└──▶  "             # print sing
 PS1+="\[$RS\]"              # remove coloring
 
-if [ -f .git-completion.bash ]; then
-  . .git-completion.bash
+if [ -f $DOTDIR/git/.git-completion.bash ]; then
+  . $DOTDIR/git/.git-completion.bash
 fi
 
 #if [ -f .git-promt.sh ]; then
