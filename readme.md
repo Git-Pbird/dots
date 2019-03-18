@@ -1,9 +1,10 @@
-#bash_profile
+# bash_profile
  Define basic root constant.
  Used for set current project folder, for further script execution point.
 
-#git
-> \>git lg\
+# git
+> `>git lg`
+
 will show the chronological order of commits\
 (with relative date marker)
 ```
@@ -12,7 +13,8 @@ will show the chronological order of commits\
 * 92f8053 (3 months ago)   |  include GIT auto-completion
 * d26595e (3 months ago)   |  adjust installation sequence
 ```
-> \>git hist\
+> `>git hist`
+
 will show the chronological order of commits\
 (with absolute date marker)
 ```
@@ -21,7 +23,8 @@ will show the chronological order of commits\
 * 92f8053 (2018-12-28) |  include GIT auto-completion
 * d26595e (2018-12-27) |  adjust installation sequence
 ```
-> \>git fullhist
+> `>git fullhist`
+
 will show the chronological order of commits\
 (with absolute date marker) & `diff` in the changed files
 ```
@@ -51,6 +54,6 @@ will show the chronological order of commits\
  ⨯     Untracked files are present
  └──▶  
  ```
-#patterns
+# patterns
 
-#scripts
+# scripts
