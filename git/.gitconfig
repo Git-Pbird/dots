@@ -19,8 +19,8 @@
     hist     = log --pretty=format:\"%Cred%h%Creset %Cgreen(%ad)%Creset | %C(yellow)%d%Creset %s\" --graph --date=short
     fullhist = log --pretty=format:\"%Cred%h%Creset %Cgreen(%ad)%Creset | %s\" --graph --date=short --stat
     lg       = log --pretty=format:\"%Cred%h%Creset %Cgreen(%cr)%Creset | %C(yellow)%d%Creset %s\" --graph --date=short
-    co       = "!f() { BRANCH=${1--}; git checkout ${1--} -q; git fetch; git status -s; }; f";
-    s        = status -sb
+    co       = "!f() { BRANCH=${1- }; git checkout ${BRANCH} -q; git fetch; git status -s; }; f"
+    s        = status -s
 
 [core]
     excludesfile = ~/repo/www/dots/git/.gitignore
