@@ -4,6 +4,7 @@ function getBranch() {
 	local branchInfoLine=$(git branch -v 2>/dev/null | grep "^*"| colrm 1 2);
 	branch=$(echo $branchInfoLine | awk '{print $1;}');
 	commit=$(echo $branchInfoLine | awk '{print $2;}');
+    tag=$(git describe --tags --exact-match 2>/dev/null);
 	# take message from branch line (after commit )
 	message=${branchInfoLine#*$commit};
 	# leave first 75 symbols of the message
@@ -16,14 +17,14 @@ function showBranchBlock() {
     # $2 sign
     # $3 text_color
     # $4 $text
-    echo -e "\n$3 • $branch"
+    echo -e "\n$3 • $branch (${tag:-no tag})"
     echo -e "$3 • \t \033[01;34m $commit $RS $3 $message $RS"
     echo -e "$3$1 $2    $RS$3$4"
 }
 
 
 function git_color {
-  #Init `branch` , `commit` & `message` variables
+  #Init `branch` , `tag`, `commit` & `message` variables
   getBranch
 
   local git_status="$(git status 2> /dev/null)"
