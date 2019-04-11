@@ -13,4 +13,4 @@ alias l="ls -lah";
 alias taxer="javaws ~/Downloads/start.jnlp"
 
 ## function
-function cd() { builtin cd "$@" && ls -GFlah; }
+function cd() { builtin cd "$@" && ls -GFA; }
