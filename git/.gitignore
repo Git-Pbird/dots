@@ -8,3 +8,5 @@
 .vscode
 
 dredd*.yml
+*.env
+*.bak
