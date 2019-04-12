@@ -29,8 +29,13 @@ function showBranchBlock() {
     # $2 sign
     # $3 text_color
     # $4 $text
+    tagcolor=$3;
 
-    echo -e "\n$3 • $branch [${tag:-no tag}] \033[01;32m [latest: ${latest:-no tag}]$RS"
+    if [[ $tag == $latest ]]; then 
+        tagcolor='\033[01;32m';
+    fi
+
+    echo -e "\n$3 • $branch $tagcolor [${tag:-no tag}] \033[01;32m [latest: ${latest:-no tag}]$RS"
     echo -e "$3 • \t \033[01;34m $commit $RS $3 $message $RS"
     echo -e "$3$1 $2    $RS$3$4"
 }
