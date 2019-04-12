@@ -2,11 +2,23 @@ source $DOTDIR/.colors;
 
 function getBranch() {
 	local branchInfoLine=$(git branch -v 2>/dev/null | grep "^*"| colrm 1 2);
-	branch=$(echo $branchInfoLine | awk '{print $1;}');
-	commit=$(echo $branchInfoLine | awk '{print $2;}');
+    if [[ $branchInfoLine =~ "HEAD detached" ]]; then
+        branch=$(echo $branchInfoLine | awk -F'[()]' '{print $2;}');
+        commit=$(echo $branchInfoLine | awk '{print $5;}');
+    else
+	    branch=$(echo $branchInfoLine | awk '{print $1;}');
+	    commit=$(echo $branchInfoLine | awk '{print $2;}');
+    fi
+
     tag=$(git describe --tags --exact-match 2>/dev/null);
+    #if tag is missing, fetch last tag
+    if [[ (!$tag && $branch) || $tag ]]; then
+       latest=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=0 --max-count=1));
+    fi
+
 	# take message from branch line (after commit )
 	message=${branchInfoLine#*$commit};
+
 	# leave first 75 symbols of the message
 	if [ ${#message} -gt 75 ]; then dots='...'; else dots=''; fi;
 	message=${message:0:75}"$dots";
@@ -17,7 +29,8 @@ function showBranchBlock() {
     # $2 sign
     # $3 text_color
     # $4 $text
-    echo -e "\n$3 • $branch (${tag:-no tag})"
+
+    echo -e "\n$3 • $branch [${tag:-no tag}] \033[01;32m [latest: ${latest:-no tag}]$RS"
     echo -e "$3 • \t \033[01;34m $commit $RS $3 $message $RS"
     echo -e "$3$1 $2    $RS$3$4"
 }
@@ -33,8 +46,16 @@ function git_color {
   local sign='';
   local text='';
 
-   if [[ $git_status =~ "On branch" || $git_status =~ "rebase in progress" ]]; then
-        if [[ $git_status =~ "no changes added to commit" ]]; then
+   if [[ $git_status =~ "On branch" || $git_status =~ "rebase in progress" || $git_status =~ "HEAD" ]]; then
+        if [[ $git_status =~ "HEAD detached at" ]]; then
+
+            sign_color='';
+            text_color=$COLOR_RED;
+            sign='• 👀';
+            text=' HEAD detached';
+            showBranchBlock "$sign_color" "$sign" "$text_color" "$text"
+
+        elif [[ $git_status =~ "no changes added to commit" ]]; then
             sign_color='';
             text_color='\033[01;37m';
             sign='❗';
