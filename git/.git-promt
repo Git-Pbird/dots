@@ -13,7 +13,7 @@ function getBranch() {
     tag=$(git describe --tags --exact-match 2>/dev/null);
     #if tag is missing, fetch last tag
     if [[ (!$tag && $branch) || $tag ]]; then
-       latest=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=0 --max-count=1));
+       latest=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1));
     fi
 
 	# take message from branch line (after commit )
@@ -30,6 +30,8 @@ function showBranchBlock() {
     # $3 text_color
     # $4 $text
     tagcolor=$3;
+    echo $tag;
+    echo $latest;
 
     if [[ $tag == $latest ]]; then 
         tagcolor='\033[01;32m';
