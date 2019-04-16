@@ -30,8 +30,6 @@ function showBranchBlock() {
     # $3 text_color
     # $4 $text
     tagcolor=$3;
-    echo $tag;
-    echo $latest;
 
     if [[ $tag == $latest ]]; then 
         tagcolor='\033[01;32m';
